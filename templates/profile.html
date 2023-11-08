@@ -8,8 +8,14 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+<style>
+#body{
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+</style>
 </head>
-<body class="bg-secondary" style="background-image:url('https://images.wsj.net/im-674840/square'); background-size: cover; background-repeat: no-repeat;">
+<body id="body" class="bg-secondary body" style="background-image:url('https://morrisonsislandcampus.ie/wp-content/uploads/2022/10/HR.png');">
     <nav class="nav navbar bg-dark navbar-expand-lg navbar-dark">
         <div class="navbar-brand">
             <a href="{% url 'home' %}">COURSE ERA</a>
@@ -19,42 +25,69 @@
             <span class="navbar-toggler-icon"></span>
           </button>
          <!-- nav bar link block--> 
-        <div class="navbar-collapse colapse" id="navbarSupportedContent">
+        <div class="navbar-collapse colapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                {% url 'home' as url %}
-                <li class="nav-item {% if request.path == url %}active{% endif %}"  >
-                    <a href="{{url}}" class="nav-link">HOME</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'addcourse' %}" class="nav-link">ADD COURSE</a>
-                </li>
-           
-                <li class="nav-item">
-                    <a href="{% url 'addstudent' %}" class="nav-link">ADD STUDENT</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'details' %}" class="nav-link">STUDENT DETAILS</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'teacherdetails' %}" class="nav-link">TEACHER TABLE</a>
-                </li>
-                <li class="nav-item">
+                <li class="nav-item" style="margin-top:7px;">
                     <a href="{% url 'logout' %}" class="nav-link"><button type="button" class="btn btn-primary">LOGOUT</button></a>
                 </li>
-            </ul>
-
-            <div class="navbar-collapse colapse justify-content-end">
-                <ul class="navbar-nav">
+                <li class="nav-item" style="margin-top:7px;">
+                    <a href="{% url 'teacher' %}" class="nav-link"><button type="button" class="btn btn-primary">BACK</button></a>
+                </li>
                     <li class="nav-item">
                         <a href="{% url 'home' %}" class="nav-link"><img style="width:50px; height:50px; border-radius:25px;" src="data:image/png;base64,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" alt=""></a>
                     </li>
                 </ul>
-            </div>
-
         </div>
     </nav>
-    {% block content %}
-    {% endblock %}
-
+<div class="container">
+    {% for message in messages %}
+    <h5>
+        <div class="alert alert-danger " style="text-align:left;">
+            {{ message }}
+        </div>
+    </h5>
+        {% endfor %}
+        <div class="card mb-3 bg-secondary" style="max-width:fit-content;">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="{{d.image.url}}" alt="..." style="width:200px; height:345px; margin-top:20px;">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <table class="table table-striped table-bordered " style="text-align: center;">
+                    <tr>
+                        <th class="bg-warning">NAME</th>
+                        <td class="bg-primary">{{d.user.first_name}}&nbsp;{{d.user.last_name}}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-warning">USER NAME</th>
+                        <td class="bg-primary">{{d.user.username}}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-warning">AGE</th>
+                        <td class="bg-primary">{{d.age}}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-warning">EMAIL</th>
+                        <td class="bg-primary">{{d.user.email}}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-warning">CONTACT</th>
+                        <td class="bg-primary">{{d.contact}}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-warning">COURSE</th>
+                        <td class="bg-primary">{{d.course.course}}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-warning">LAST LOGIN</th>
+                        <td class="bg-primary">{{d.user.last_login}}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div> 
+</div>
 </body>
 </html>

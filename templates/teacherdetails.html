@@ -1,0 +1,36 @@
+{% extends 'navbase.html' %}
+{% block content %}
+{% load static %}
+<div>
+<div class="table table-responsive">
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>course</th>
+                <th>AGE</th>
+                <th>EMAIL</th>
+                <th>CONTACT NUMBER</th>
+                <th>PHOTO</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in user %}
+            <tr>
+                <td>{{u.id}}</td>
+                <td>{{u.user.first_name}}</td>
+                <th>{{u.course.course}}</th>
+                <td>{{u.age}}</td>
+                <td>{{u.user.email}}</td>
+                <td>{{u.contact}}</td>
+                <td><img src="{{u.image.url}}" style="width:80px; height:100px;"></td>
+                <td><a href="{% url 'dele' u.user.id %}">DELETE</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %}
